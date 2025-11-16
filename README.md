@@ -86,7 +86,7 @@ pip install easyocr opencv-python numpy
 
 ---
 
-##  Quick Start
+## 🚀 Quick Start
 
 ### Basic Usage
 
@@ -112,7 +112,7 @@ for f in invoices/*.jpg; do python script.py "$f" > "output_$(basename "$f" .jpg
 
 ---
 
-##  How It Works
+## 🔍 How It Works
 
 ### Processing Pipeline
 
@@ -148,7 +148,7 @@ Produces:
 
 ---
 
-##  Usage Examples
+## 💡 Usage Examples
 
 ### Example 1: Basic Invoice Processing
 
@@ -199,7 +199,7 @@ ocr = InvoiceOCR(languages=['en', 'es'])
 
 ---
 
-##  Output Format
+## 📊 Output Format
 
 ### Console Output Structure
 
@@ -249,7 +249,7 @@ Lines detected: 15
 
 ---
 
-##  Configuration
+## ⚙️ Configuration
 
 ### Adjusting Preprocessing
 
@@ -280,7 +280,7 @@ results = self.reader.readtext(
 
 ---
 
-##  Troubleshooting
+## 🔧 Troubleshooting
 
 ### Issue: "Not enough memory" error
 

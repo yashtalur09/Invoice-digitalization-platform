@@ -1,435 +1,305 @@
-# 📄 Invoice Digitalization Platform
+# OCR Dashboard - Full Stack Application
 
-> Transform handwritten invoices into digital text with advanced OCR technology
+A complete full-stack OCR (Optical Character Recognition) dashboard built with Python FastAPI backend, React frontend, and PostgreSQL database. This application allows users to upload images, extract text using OCR, preview the results, save them to the database, and download saved files.
 
-[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/downloads/)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![EasyOCR](https://img.shields.io/badge/OCR-EasyOCR-orange.svg)](https://github.com/JaidedAI/EasyOCR)
+## 🚀 Features
 
----
+- **Image Upload**: Upload images for text extraction
+- **OCR Processing**: Extract text from images using EasyOCR with advanced preprocessing
+- **Text Preview**: View extracted text in a clean, formatted preview panel
+- **Save to Database**: Save extracted text to PostgreSQL with custom file names
+- **File Management**: List all saved files with metadata (name, date, size)
+- **Download Files**: Download saved text files from the database
+- **Modern UI**: Clean, responsive, and modern user interface
 
-## 🎯 Overview
+## 📋 Tech Stack
 
-The Invoice Digitalization Platform is a powerful, free, and open-source solution for extracting text from handwritten invoices. Built with **EasyOCR** and advanced image preprocessing techniques, it converts paper invoices into structured digital data with high accuracy.
+### Backend
+- **FastAPI**: Modern Python web framework
+- **SQLAlchemy**: ORM for database operations
+- **PostgreSQL**: Relational database
+- **EasyOCR**: OCR engine for text extraction
+- **OpenCV**: Image preprocessing
 
-### ✨ Key Features
+### Frontend
+- **React**: Frontend framework
+- **Axios**: HTTP client for API calls
+- **CSS3**: Modern styling with gradients and animations
 
-- 🖼️ **Advanced Image Preprocessing** - CLAHE contrast enhancement, denoising, and morphological operations
-- 🎯 **High Accuracy OCR** - Powered by EasyOCR with optimized settings for handwriting
-- 📊 **Detailed Analytics** - Word-level confidence scores and comprehensive statistics
-- 💾 **Debug Mode** - Saves preprocessed images for quality inspection
-- 🔧 **Memory Optimized** - Handles images of any size without memory overflow
-- 🆓 **100% Free** - No API keys, no billing, runs completely offline
+## 📁 Project Structure
 
-### 🚀 Use Cases
+```
+Invoice-digitalization-platform/
+├── backend/
+│   ├── __init__.py
+│   ├── main.py              # FastAPI application and endpoints
+│   ├── database.py          # Database configuration
+│   ├── models.py            # SQLAlchemy models
+│   ├── crud.py              # CRUD operations
+│   ├── ocr_service.py       # OCR integration service
+│   └── init_db.py           # Database initialization script
+├── frontend/
+│   ├── public/
+│   │   └── index.html
+│   ├── src/
+│   │   ├── App.js           # Main React component
+│   │   ├── App.css          # Styles
+│   │   ├── index.js         # React entry point
+│   │   └── index.css        # Global styles
+│   └── package.json
+├── script.py                # Original OCR script
+├── requirements.txt         # Python dependencies
+└── README.md
+```
 
-- Digitizing handwritten business invoices
-- Converting paper records to searchable text
-- Automating invoice data entry
-- Building document management systems
-- Creating searchable invoice archives
-
----
-
-## 📋 Table of Contents
-
-- [Installation](#-installation)
-- [Quick Start](#-quick-start)
-- [How It Works](#-how-it-works)
-- [Usage Examples](#-usage-examples)
-- [Output Format](#-output-format)
-- [Configuration](#-configuration)
-- [Troubleshooting](#-troubleshooting)
-- [Performance Tips](#-performance-tips)
-- [Roadmap](#-roadmap)
-- [Contributing](#-contributing)
-
----
-
-## 🛠️ Installation
+## 🛠️ Installation & Setup
 
 ### Prerequisites
 
 - Python 3.8 or higher
-- Windows, macOS, or Linux
-- 4GB RAM minimum (8GB recommended)
+- Node.js 14+ and npm
+- PostgreSQL 12+ installed and running
+- PostgreSQL database created
 
-### Step 1: Clone the Repository
+### Step 1: Database Setup
+
+1. **Install PostgreSQL** (if not already installed)
+   - Windows: Download from [PostgreSQL official website](https://www.postgresql.org/download/windows/)
+   - macOS: `brew install postgresql`
+   - Linux: `sudo apt-get install postgresql`
+
+2. **Create Database**
+   ```sql
+   CREATE DATABASE ocr_dashboard;
+   ```
+
+3. **Update Database Connection**
+   - Edit `backend/database.py`
+   - Update the `DATABASE_URL` with your PostgreSQL credentials:
+   ```python
+   DATABASE_URL = "postgresql://username:password@localhost:5432/ocr_dashboard"
+   ```
+
+### Step 2: Backend Setup
+
+1. **Navigate to project directory**
+   ```bash
+   cd Invoice-digitalization-platform
+   ```
+
+2. **Create virtual environment** (if not already created)
+   ```bash
+   python -m venv venv
+   ```
+
+3. **Activate virtual environment**
+   - Windows:
+     ```bash
+     venv\Scripts\activate
+     ```
+   - macOS/Linux:
+     ```bash
+     source venv/bin/activate
+     ```
+
+4. **Install Python dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+5. **Initialize Database**
+   ```bash
+   cd backend
+   python init_db.py
+   cd ..
+   ```
+
+6. **Start Backend Server**
+   ```bash
+   cd backend
+   python main.py
+   ```
+   
+   Or using uvicorn directly:
+   ```bash
+   uvicorn main:app --reload --host 0.0.0.0 --port 8000
+   ```
+
+   The API will be available at `http://localhost:8000`
+   API documentation: `http://localhost:8000/docs`
+
+### Step 3: Frontend Setup
+
+1. **Navigate to frontend directory**
+   ```bash
+   cd frontend
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Start development server**
+   ```bash
+   npm start
+   ```
+
+   The frontend will be available at `http://localhost:3000`
+
+## 🎯 Usage
+
+1. **Start Backend**: Make sure PostgreSQL is running and start the FastAPI server
+2. **Start Frontend**: Start the React development server
+3. **Open Browser**: Navigate to `http://localhost:3000`
+4. **Upload Image**: Click "Choose Image File" and select an image
+5. **Process**: Click "Process Image" to extract text
+6. **Preview**: View the extracted text in the preview panel
+7. **Save**: Enter a file name and click "Save to Database"
+8. **Manage Files**: View, download, or delete saved files from the table
+
+## 📡 API Endpoints
+
+### POST `/process-image`
+Process an uploaded image and extract text.
+
+**Request:**
+- `file`: Image file (multipart/form-data)
+- `user_id`: User identifier (form data, default: 1)
+
+**Response:**
+```json
+{
+  "success": true,
+  "text": "Extracted text...",
+  "word_count": 10,
+  "message": "Text extracted successfully"
+}
+```
+
+### POST `/save-text`
+Save extracted text to the database.
+
+**Request:**
+- `file_name`: Name for the file (form data)
+- `text_content`: Text content to save (form data)
+- `user_id`: User identifier (form data)
+
+**Response:**
+```json
+{
+  "success": true,
+  "file_id": 1,
+  "file_name": "invoice_001.txt",
+  "created_at": "2024-01-01T12:00:00",
+  "message": "File saved successfully"
+}
+```
+
+### GET `/files/{user_id}`
+Get all saved files for a user.
+
+**Response:**
+```json
+{
+  "success": true,
+  "files": [
+    {
+      "id": 1,
+      "file_name": "invoice_001.txt",
+      "created_at": "2024-01-01T12:00:00",
+      "content_length": 150
+    }
+  ],
+  "total": 1
+}
+```
+
+### GET `/download/{file_id}`
+Download a saved text file.
+
+**Response:** Text file download
+
+### DELETE `/files/{file_id}`
+Delete a saved file.
+
+**Response:**
+```json
+{
+  "success": true,
+  "message": "File deleted successfully"
+}
+```
+
+## 🗄️ Database Schema
+
+### `extracted_files` Table
+
+| Column     | Type      | Description                    |
+|------------|-----------|--------------------------------|
+| id         | Integer   | Primary key                    |
+| user_id    | Integer   | User identifier                |
+| file_name  | String    | Name of the saved file         |
+| content    | Text      | Text content (stored as .txt)  |
+| created_at | DateTime  | Timestamp of creation          |
+
+## 🔧 Configuration
+
+### Environment Variables
+
+You can set the database URL using an environment variable:
 
 ```bash
-git clone https://github.com/yourusername/invoice-digitalization-platform.git
-cd invoice-digitalization-platform
+export DATABASE_URL="postgresql://user:password@localhost:5432/ocr_dashboard"
 ```
 
-### Step 2: Create Virtual Environment
+### CORS Configuration
 
-**Windows:**
-```cmd
-python -m venv venv
-venv\Scripts\activate
-```
+CORS is configured in `backend/main.py`. Update the `allow_origins` list if your frontend runs on a different port.
 
-**Linux/macOS:**
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
+## 🐛 Troubleshooting
 
-### Step 3: Install Dependencies
+### Database Connection Issues
+- Ensure PostgreSQL is running
+- Verify database credentials in `backend/database.py`
+- Check if the database exists: `psql -l`
 
-```bash
-pip install --upgrade pip
-pip install easyocr opencv-python numpy
-```
+### OCR Processing Errors
+- Ensure all dependencies are installed: `pip install -r requirements.txt`
+- Check that image files are valid and readable
+- First OCR run may take longer (downloading models)
 
-**Note:** On first run, EasyOCR will download recognition models (~100MB). Ensure you have a stable internet connection.
+### Frontend Connection Issues
+- Verify backend is running on `http://localhost:8000`
+- Check browser console for CORS errors
+- Update `API_BASE_URL` in `frontend/src/App.js` if needed
 
----
+## 📝 Notes
 
-## 🚀 Quick Start
+- The OCR service initializes on first use and may take a moment
+- Temporary uploaded files are automatically cleaned up after processing
+- File names are automatically appended with `.txt` extension if not provided
+- The application uses a placeholder `user_id` (1) - implement authentication for production
 
-### Basic Usage
+## 🚀 Production Deployment
 
-```bash
-python script.py invoice.jpg
-```
+For production deployment:
 
-### With Output Redirection
+1. **Environment Variables**: Use environment variables for sensitive data
+2. **Database**: Use a production PostgreSQL database
+3. **Security**: Implement proper authentication and authorization
+4. **CORS**: Configure CORS for your production domain
+5. **Static Files**: Build React app: `npm run build` and serve with a web server
+6. **Process Manager**: Use PM2 or similar for process management
 
-```bash
-python script.py invoice.jpg > output.txt
-```
+## 📄 License
 
-### Processing Multiple Files
-
-```bash
-# Windows
-for %f in (invoices\*.jpg) do python script.py "%f" > "output_%~nf.txt"
-
-# Linux/macOS
-for f in invoices/*.jpg; do python script.py "$f" > "output_$(basename "$f" .jpg).txt"; done
-```
-
----
-
-## 🔍 How It Works
-
-### Processing Pipeline
-
-```
-Input Image → Preprocessing → OCR Detection → Text Extraction → Results Output
-```
-
-### 1. **Preprocessing Stage**
-
-The script applies multiple enhancement techniques:
-
-- **Grayscale Conversion** - Simplifies image to single channel
-- **CLAHE Enhancement** - Adaptive contrast improvement for uneven lighting
-- **Denoising** - Removes background noise and artifacts
-- **Otsu's Thresholding** - Automatic binary conversion
-- **Morphological Operations** - Cleans up small imperfections
-- **Smart Resizing** - Optimizes image dimensions for OCR
-
-### 2. **OCR Detection**
-
-Uses EasyOCR with optimized parameters:
-- Memory-efficient batch processing
-- Adjusted confidence thresholds
-- Single-worker mode for stability
-
-### 3. **Output Generation**
-
-Produces:
-- Full extracted text
-- Word-by-word confidence scores
-- Visual confidence indicators
-- Comprehensive statistics
-
----
-
-## 💡 Usage Examples
-
-### Example 1: Basic Invoice Processing
-
-```bash
-python script.py my_invoice.jpg
-```
-
-**Output:**
-```
-============================================================
-EXTRACTED TEXT FROM INVOICE
-============================================================
-TALUR YASHWANTH
-============================================================
-
-WORD-LEVEL DETAILS (with confidence scores)
-============================================================
-[HIGH]   1. TALUR                     | Confidence:  92.3% █████████
-[HIGH]   2. YASHWANTH                 | Confidence:  88.7% ████████
-```
-
-### Example 2: Batch Processing
-
-Create a batch script (`process_all.bat`):
-
-```batch
-@echo off
-for %%f in (invoices\*.jpg) do (
-    echo Processing %%f...
-    python script.py "%%f" > "output\%%~nf.txt"
-)
-echo Done!
-```
-
-### Example 3: Custom Language
-
-Modify `script.py` to support multiple languages:
-
-```python
-# For Hindi + English
-ocr = InvoiceOCR(languages=['en', 'hi'])
-
-# For Spanish + English
-ocr = InvoiceOCR(languages=['en', 'es'])
-```
-
-**Supported languages:** English, Hindi, Spanish, French, German, Chinese, Japanese, Korean, and 70+ more!
-
----
-
-## 📊 Output Format
-
-### Console Output Structure
-
-```
-============================================================
-FREE HANDWRITTEN INVOICE OCR - Powered by EasyOCR
-============================================================
-
-Preprocessing image for better accuracy...
-Preprocessed image saved as: preprocessed_invoice.jpg
-Image size: 1280x960 pixels
-
-Running OCR detection...
-
-============================================================
-EXTRACTED TEXT FROM INVOICE
-============================================================
-[Extracted text here]
-============================================================
-
-WORD-LEVEL DETAILS (with confidence scores)
-============================================================
-[HIGH]   1. WORD1          | Confidence:  95.2% █████████
-[MED]    2. WORD2          | Confidence:  67.8% ██████
-[LOW]    3. WORD3          | Confidence:  45.1% ████
-
-============================================================
-STATISTICS
-============================================================
-Total words detected: 15
-Average confidence: 78.45%
-High confidence (>80%): 10 words
-Medium confidence (50-80%): 3 words
-Low confidence (<50%): 2 words
-Character count: 125
-Lines detected: 15
-============================================================
-```
-
-### Understanding Confidence Levels
-
-| Level | Confidence | Meaning |
-|-------|------------|---------|
-| `[HIGH]` | >80% | Very reliable, likely accurate |
-| `[MED]` | 50-80% | Moderately reliable, may need review |
-| `[LOW]` | <50% | Low reliability, manual verification recommended |
-
----
-
-## ⚙️ Configuration
-
-### Adjusting Preprocessing
-
-Edit the `preprocess_image()` method in `script.py`:
-
-```python
-# Increase contrast enhancement
-clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8))  # Default: 2.0
-
-# Adjust denoising strength
-denoised = cv2.fastNlMeansDenoising(enhanced, None, 15, 7, 21)  # Default: 10
-
-# Change max image dimension
-max_dimension = 1280  # Default: 1920
-```
-
-### Adjusting OCR Parameters
-
-Edit the `extract_text()` method:
-
-```python
-results = self.reader.readtext(
-    img,
-    text_threshold=0.7,  # Increase for stricter detection (default: 0.6)
-    low_text=0.5,        # Increase to reduce false positives (default: 0.4)
-)
-```
-
----
-
-## 🔧 Troubleshooting
-
-### Issue: "Not enough memory" error
-
-**Solution:**
-1. Reduce `max_dimension` in the script (try 1280 or 800)
-2. Close other applications
-3. Process smaller images
-4. Use a machine with more RAM
-
-### Issue: Poor accuracy on handwriting
-
-**Solutions:**
-1. Ensure good lighting when capturing images
-2. Use higher resolution images (300 DPI or higher)
-3. Make sure text is dark on light background
-4. Check the `preprocessed_*.jpg` file - if it looks unclear, adjust preprocessing
-5. Consider using Google Vision API for better accuracy (requires billing)
-
-### Issue: No text detected
-
-**Possible causes:**
-1. Image is too blurry or low resolution
-2. Text is too faint or light
-3. Preprocessing made text worse
-
-**Solutions:**
-1. Try running with `use_preprocessing=False`
-2. Manually enhance the image in photo editor first
-3. Retake the photo with better lighting
-
-### Issue: Wrong language detected
-
-**Solution:**
-Change the language parameter:
-```python
-ocr = InvoiceOCR(languages=['hi'])  # For Hindi only
-```
-
----
-
-## 🎯 Performance Tips
-
-### For Best Results
-
-1. **Image Quality**
-   - Use 300 DPI or higher resolution
-   - Ensure even, bright lighting
-   - Avoid shadows and glare
-   - Keep text dark on light background
-
-2. **Camera Settings**
-   - Hold camera steady or use tripod
-   - Ensure text is in focus
-   - Capture straight-on (not at angle)
-   - Fill frame with document
-
-3. **Preprocessing**
-   - Check `preprocessed_*.jpg` output
-   - Adjust CLAHE settings if needed
-   - Experiment with threshold values
-
-4. **Hardware**
-   - Use GPU for faster processing (requires CUDA setup)
-   - More RAM = can process larger images
-   - SSD speeds up model loading
-
----
-
-## 🗺️ Roadmap
-
-### Planned Features
-
-- [ ] Batch processing GUI
-- [ ] CSV/Excel export of extracted data
-- [ ] Web-based interface
-- [ ] Invoice field detection (date, amount, invoice number)
-- [ ] Multi-language support in UI
-- [ ] Database integration
-- [ ] REST API for integration
-- [ ] Docker containerization
-- [ ] PDF support
-- [ ] Template-based extraction
-
-### Alternative OCR Engines (Future)
-
-- TrOCR (Microsoft's transformer model)
-- Tesseract OCR integration
-- Google Vision API support
-- Azure Form Recognizer integration
-
----
+This project is provided as-is for educational and development purposes.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Here's how you can help:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Areas for Contribution
-
-- Improving preprocessing algorithms
-- Adding support for more languages
-- Creating a GUI interface
-- Writing tests
-- Documentation improvements
-- Performance optimizations
+Feel free to submit issues and enhancement requests!
 
 ---
 
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- [EasyOCR](https://github.com/JaidedAI/EasyOCR) - The OCR engine powering this project
-- [OpenCV](https://opencv.org/) - Image processing library
-- [NumPy](https://numpy.org/) - Numerical computing tools
-
----
-
-## 📧 Contact & Support
-
-- **Issues:** [GitHub Issues](https://github.com/yourusername/invoice-digitalization-platform/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/yourusername/invoice-digitalization-platform/discussions)
-- **Email:** taluryash4@gmail.com
-
----
-
-## 📊 Project Stats
-
-- **Language:** Python 3.8+
-- **Dependencies:** 3 core libraries
-- **Lines of Code:** ~250
-- **Processing Time:** 2-5 seconds per invoice
-- **Accuracy:** 70-95% (depends on handwriting quality)
-
----
-
-<div align="center">
-
-**⭐ Star this repo if you find it useful! ⭐**
-
-Made with ❤️ for the open-source community
-
-</div>
+**Built with ❤️ using FastAPI, React, and PostgreSQL**

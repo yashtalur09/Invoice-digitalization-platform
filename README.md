@@ -2,7 +2,7 @@
 
 A complete full-stack OCR (Optical Character Recognition) dashboard built with Python FastAPI backend, React frontend, and PostgreSQL database. This application allows users to upload images, extract text using OCR, preview the results, save them to the database, and download saved files.
 
-## 🚀 Features
+##  Features
 
 - **Image Upload**: Upload images for text extraction
 - **OCR Processing**: Extract text from images using EasyOCR with advanced preprocessing
@@ -12,7 +12,7 @@ A complete full-stack OCR (Optical Character Recognition) dashboard built with P
 - **Download Files**: Download saved text files from the database
 - **Modern UI**: Clean, responsive, and modern user interface
 
-## 📋 Tech Stack
+##  Tech Stack
 
 ### Backend
 - **FastAPI**: Modern Python web framework
@@ -26,7 +26,7 @@ A complete full-stack OCR (Optical Character Recognition) dashboard built with P
 - **Axios**: HTTP client for API calls
 - **CSS3**: Modern styling with gradients and animations
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 Invoice-digitalization-platform/
@@ -147,7 +147,7 @@ Invoice-digitalization-platform/
 
    The frontend will be available at `http://localhost:3000`
 
-## 🎯 Usage
+##  Usage
 
 1. **Start Backend**: Make sure PostgreSQL is running and start the FastAPI server
 2. **Start Frontend**: Start the React development server
@@ -158,7 +158,7 @@ Invoice-digitalization-platform/
 7. **Save**: Enter a file name and click "Save to Database"
 8. **Manage Files**: View, download, or delete saved files from the table
 
-## 📡 API Endpoints
+##  API Endpoints
 
 ### POST `/process-image`
 Process an uploaded image and extract text.
@@ -243,7 +243,7 @@ Delete a saved file.
 | content    | Text      | Text content (stored as .txt)  |
 | created_at | DateTime  | Timestamp of creation          |
 
-## 🔧 Configuration
+##  Configuration
 
 ### Environment Variables
 
@@ -257,7 +257,7 @@ export DATABASE_URL="postgresql://user:password@localhost:5432/ocr_dashboard"
 
 CORS is configured in `backend/main.py`. Update the `allow_origins` list if your frontend runs on a different port.
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Database Connection Issues
 - Ensure PostgreSQL is running
@@ -274,14 +274,14 @@ CORS is configured in `backend/main.py`. Update the `allow_origins` list if your
 - Check browser console for CORS errors
 - Update `API_BASE_URL` in `frontend/src/App.js` if needed
 
-## 📝 Notes
+##  Notes
 
 - The OCR service initializes on first use and may take a moment
 - Temporary uploaded files are automatically cleaned up after processing
 - File names are automatically appended with `.txt` extension if not provided
 - The application uses a placeholder `user_id` (1) - implement authentication for production
 
-## 🚀 Production Deployment
+##  Production Deployment
 
 For production deployment:
 
@@ -292,11 +292,11 @@ For production deployment:
 5. **Static Files**: Build React app: `npm run build` and serve with a web server
 6. **Process Manager**: Use PM2 or similar for process management
 
-## 📄 License
+##  License
 
 This project is provided as-is for educational and development purposes.
 
-## 🤝 Contributing
+##  Contributing
 
 Feel free to submit issues and enhancement requests!
 
